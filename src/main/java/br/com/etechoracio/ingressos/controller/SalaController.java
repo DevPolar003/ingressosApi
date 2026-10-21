@@ -21,12 +21,7 @@ public class SalaController {
     private SalaRepository salaRepository;
 
 
-    public SalaController(SalaRepository salaRepository){
-        this.salaRepository = salaRepository;
-    }
 
-
-    // Buscar todas as Salas
     @GetMapping
     public List<Sala> buscarTodos(){return salaRepository.findAll();}
 
@@ -40,17 +35,12 @@ public class SalaController {
         return ResponseEntity.notFound().build();
     }
 
-    // Salvar Sala
+
     @PostMapping
     public ResponseEntity<Sala> cadastrar(@RequestBody Sala sala){
         sala = salaRepository.save(sala);
         return ResponseEntity.status(HttpStatus.CREATED).body(sala);
     }
-
-
-
-
-
 
 }
 

@@ -25,50 +25,70 @@ public class FilmeController {
 
 
 
-
     @GetMapping
     public List<Filme> listar(){
         return filmeRepository.findAll();
     }
+
+
+
+
     @GetMapping("/{id}")
-    public ResponseEntity<Filme> buscarPorId(@PathVariable Long id){
+    public ResponseEntity<Filme> buscarPorId(@PathVariable Long id)
+    {
+
         var filme = filmeRepository.findById(id);
+
         if(filme.isPresent())
             return ResponseEntity.ok(filme.get());
+
         return ResponseEntity.notFound().build();
     }
 
 
-
-
-
     @PostMapping
-    public ResponseEntity<Filme> cadastrar(@RequestBody Filme filme){
+    public ResponseEntity<Filme> cadastrar(@RequestBody Filme filme)
+    {
         filme = filmeRepository.save(filme);
         return ResponseEntity.status(HttpStatus.CREATED).body(filme);
     }
 
 
+
+
+
+    @PutMapping("/{id}")
+    public Filme atualizar(@PathVariable Long id, @RequestBody Filme novoFilme)
+    {
+        var filme = filmeRepository.findById(id);
+
+        if(filme.isPresent())
+        {
+            novoFilme.setId(filme.get().getId());
+            novoFilme = filmeRepository.save(novoFilme);
+        }
+
+        return novoFilme;
+    }
+
+
+
+
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletar(@PathVariable Long id){
-        if(idsExistentes.contains(id)){
+    public ResponseEntity<Void> deletar(@PathVariable Long id)
+    {
+        if(idsExistentes.contains(id))
+        {
+
             return ResponseEntity.ok().build();
-        }else{
+
+        }else
+        {
             return ResponseEntity.notFound().build();
         }
     }
 
 
 
-    @PutMapping("/{id}")
-    public Filme atualizar(@PathVariable Long id,
-                           @RequestBody Filme novoFilme){
-        var filme = filmeRepository.findById(id);
-        if(filme.isPresent()) {
-            novoFilme.setId(filme.get().getId());
-            novoFilme = filmeRepository.save(novoFilme);
-        }
-        return novoFilme;
-    }
-
 }
+

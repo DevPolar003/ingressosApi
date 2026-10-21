@@ -1,6 +1,7 @@
 package br.com.etechoracio.ingressos.enums;
 
-public enum CategoriaFilmeEnum {
+public enum CategoriaFilmeEnum
+{
     ACAO,
     AVENTURA,
     COMEDIA,
